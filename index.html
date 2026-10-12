@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>untuk seseorang</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0c;
+    color: #d4d4d8;
+    font-family: 'Inter', sans-serif;
+    font-weight: 200;
+    overflow-x: hidden;
+    line-height: 1.8;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 120px 32px 160px;
+  }
+
+  .opening {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .opening .tiny {
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: #52525b;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1.5s ease forwards 0.3s;
+  }
+
+  .opening h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    line-height: 1.15;
+    color: #e4e4e7;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    animation: fadeUp 1.8s ease forwards 0.8s;
+  }
+
+  .opening h1 .dim { color: #52525b; }
+
+  .scroll-hint {
+    margin-top: 80px;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: #3f3f46;
+    opacity: 0;
+    animation: fadeUp 1.5s ease forwards 2s;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, #3f3f46, transparent);
+    margin-top: 16px;
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  .quote {
+    padding: 80px 0;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+  }
+
+  .quote.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .quote::before {
+    content: '—';
+    display: block;
+    color: #27272a;
+    font-size: 14px;
+    margin-bottom: 20px;
+    letter-spacing: 0.2em;
+  }
+
+  .quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.25rem, 3vw, 1.7rem);
+    font-weight: 300;
+    line-height: 1.6;
+    color: #d4d4d8;
+  }
+
+  .quote p em { font-style: italic; color: #a1a1aa; }
+  .quote .mark { color: #fafafa; font-style: italic; }
+
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: #27272a;
+    margin: 0 0 80px 0;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+
+  .divider.visible { opacity: 1; }
+
+  .closing {
+    padding-top: 100px;
+    border-top: 1px solid #18181b;
+    margin-top: 60px;
+  }
+
+  .closing p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+    font-weight: 300;
+    color: #71717a;
+    line-height: 1.9;
+    margin-bottom: 40px;
+  }
+
+  .cta-wrap {
+    margin-top: 80px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+  }
+
+  .cta-wrap.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 32px;
+    background: transparent;
+    border: 1px solid #27272a;
+    color: #71717a;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #e4e4e7;
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+    z-index: -1;
+  }
+
+  .cta-btn:hover {
+    color: #0a0a0c;
+    border-color: #e4e4e7;
+  }
+
+  .cta-btn:hover::before {
+    transform: translateY(0);
+  }
+
+  .cta-btn svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.4s ease;
+  }
+
+  .cta-btn:hover svg {
+    transform: translateX(4px);
+  }
+
+  .signature {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #27272a;
+    margin-top: 80px;
+    text-align: center;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  .glow {
+    position: fixed;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(120, 80, 160, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+    filter: blur(40px);
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 80px 24px 120px; }
+    .quote { padding: 56px 0; }
+    .cta-btn { padding: 14px 24px; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="glow"></div>
+
+<div class="container">
+
+  <section class="opening">
+    <div class="tiny">untuk seseorang</div>
+    <h1>
+      yang kucintai,<br>
+      namun tak sempat<br>
+      <span class="dim">kumiliki.</span>
+    </h1>
+    <div class="scroll-hint">SCROLL</div>
+  </section>
+
+  <section class="quote">
+    <p>kamu tau rasanya? <em>ditolak itu bukan karena kamu kurang,</em> tapi karena semesta punya alasan yang kamu gak pernah minta.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="quote">
+    <p>yang paling nyakitin itu bukan pas dia bilang "enggak". <span class="mark">tapi pas dia bilang "enggak" sambil tetep bersikap baik ke kita.</span> kayak gak terjadi apa-apa.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="quote">
+    <p>aku udah relain banyak hal buat dia. <em>dan dia tetep pilih yang lain.</em> gak apa-apa sih. cuma kadang aku pengen nanya, aku ini salahnya di mana?</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="quote">
+    <p>aku bukan sedih karena dia gak milih aku. <span class="mark">aku sedih karena aku sadar, selama ini cuma aku yang berjuang.</span> dari awal. dari aku belum kenal dia banget.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="quote">
+    <p>yang bikin makin sakit itu pas aku inget semua hal yang aku lakuin buat dia. <em>hal-hal kecil yang aku hafal.</em> hal-hal yang dia bahkan gak pernah sadar aku perhatiin.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="quote">
+    <p>kadang aku mikir, <span class="mark">kalau aja dia tau seberapa aku berusaha, mungkin dia bakal mikir dua kali.</span> tapi ya gak mungkin, karena dia gak pernah liat aku kayak gitu.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="quote">
+    <p>aku gak minta banyak sebenernya. <em>aku cuma pengen dipilih, sekali aja.</em> dipilih beneran, bukan karena gak ada yang lain.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="quote">
+    <p>dan sekarang aku harus belajar <span class="mark">ngerasain lega, padahal yang aku rasain cuma kayak kehilangan sesuatu yang sebenernya dari awal bukan punya aku.</span></p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="quote">
+    <p>dia mungkin gak tau, <em>tapi semua sakit ini aku ubah jadi sesuatu.</em> bukan buat dia. buat aku. karena aku gak mau tenggelam di orang yang dari awal gak pernah nyemplung.</p>
+  </section>
+
+  <section class="closing">
+    <p>kalau kamu baca ini dan kamu lagi di posisi yang sama — ditolak, diabaikan, atau cuma jadi cadangan — kamu gak sendirian. dan kamu gak salah.</p>
+    <p>yang salah cuma waktu. dan waktu emang gak pernah berpihak. pelan-pelan ya. kamu bakal baik-baik aja. bukan karena dia, tapi karena kamu.</p>
+  </section>
+
+  <div class="cta-wrap">
+    <a href="https://wa.me/6282144311049?text=hai" class="cta-btn" target="_blank" rel="noopener">
+      made by
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <div class="signature">
+    untuk seseorang yang kucintai, namun tak sempat kumiliki
+  </div>
+
+</div>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.quote, .divider, .cta-wrap').forEach(el => observer.observe(el));
+
+  document.addEventListener('mousemove', (e) => {
+    const glow = document.querySelector('.glow');
+    const x = (e.clientX / window.innerWidth - 0.5) * 40;
+    glow.style.transform = `translateX(calc(-50% + ${x}px))`;
+  });
+</script>
+
+</body>
+  </html>
